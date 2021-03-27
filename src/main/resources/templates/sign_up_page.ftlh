@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<#import "spring.ftl" as spring/>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,14 +9,17 @@
     <title>Document</title>
 </head>
 <body>
+<h2><a href="?lang=en">EN</a></h2>
+<h2><a href="?lang=ru">RU</a></h2>
+<h1><@spring.message 'sign_up_page.title'/></h1>
     <form method="post" action="/signUp" enctype="multipart/form-data">
-        <label>Email</label>
+        <label><@spring.message 'sign_up_page.email'/></label>
         <input type="text" name="email">
-        <label>Password</label>
+        <label><@spring.message 'sign_up_page.password'/></label>
         <input type="password" name="password">
-        <label>Username</label>
+        <label><@spring.message 'sign_up_page.username'/></label>
         <input type="text" name="username">
-        <label>Birth</label>
+        <label><@spring.message 'sign_up_page.birth'/></label>
         <input type="date" name="birth">
         <input type="submit">
     </form>
