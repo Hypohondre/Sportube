@@ -1,9 +1,13 @@
 package itis.semestrovka.services.interfaces;
 
 import itis.semestrovka.dto.UserDto;
+import itis.semestrovka.models.User;
+import itis.semestrovka.security.details.UserDetailsImpl;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
 public interface ViewProfileService {
-    Optional<UserDto> getUser();
+    Optional<UserDto> getUser(UserDetailsImpl user);
+    void updateUserPhoto(String photoName, User user);
 }

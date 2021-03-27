@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post" action="/signUp">
+    <form method="post" action="/signUp" enctype="multipart/form-data">
         <label>Email</label>
         <input type="text" name="email">
         <label>Password</label>

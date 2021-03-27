@@ -22,6 +22,10 @@ public class UserDetailsImpl implements UserDetails {
         return Collections.singleton(authority);
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
