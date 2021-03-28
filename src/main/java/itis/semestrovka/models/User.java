@@ -41,8 +41,10 @@ public class  User {
 
     private String photo;
 
+    private String code;
+
     public enum State {
-        ACTIVE, BANNED
+        ACTIVE, BANNED, FULLACTIVE
     }
 
     public enum Role {
@@ -60,17 +62,6 @@ public class  User {
 
     public User(Long id) {
         this.id = id;
-    }
-
-    public static User fromSignUpToUser(SignUpForm form) {
-        return User.builder()
-                .email(form.getEmail())
-                .password(form.getPassword())
-                .username(form.getUsername())
-                .birth(form.getBirth())
-                .role(Role.USER)
-                .state(State.ACTIVE)
-                .build();
     }
 
     public boolean isActive() {

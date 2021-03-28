@@ -3,6 +3,7 @@ package itis.semestrovka.controllers;
 import itis.semestrovka.dto.UserDto;
 import itis.semestrovka.dto.forms.SignUpForm;
 import itis.semestrovka.services.implementations.SignUpServiceImpl;
+import itis.semestrovka.services.interfaces.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SignUpController {
     private final SignUpServiceImpl signUpService;
+    private final MailService mailService;
 
     @GetMapping
     public String getSignUpPage(
@@ -51,6 +53,7 @@ public class SignUpController {
             Optional<UserDto> userCandidate = signUpService.signUp(signUpForm);
             if(userCandidate.isPresent()) {
                 UserDto user = userCandidate.get();
+                mailService.sendMail(user);
 
                 return "redirect:/signIn";
             } else {

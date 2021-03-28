@@ -20,15 +20,5 @@ public class UserDto {
     private String role;
     private String state;
     private String photo;
-
-    public static UserDto fromUser(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .username(user.getUsername())
-                .birth(user.getBirth())
-                .role(user.getRole().toString())
-                .state(user.getState().toString())
-                .build();
-    }
+    private String code;
 }

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public class SignUpServiceImpl  implements SignUpService {
         user.setState(User.State.ACTIVE);
         user.setPassword(passwordEncoder.encode(form.getPassword()));
         user.setPhoto("default.png");
+        user.setCode(UUID.randomUUID().toString());
         userRepository.save(user);
 
         UserDto userDto = dtoMapper.userToDto(user);

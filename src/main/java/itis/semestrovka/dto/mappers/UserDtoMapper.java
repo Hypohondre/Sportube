@@ -16,7 +16,8 @@ public interface UserDtoMapper {
             @Mapping(target = "birth", source = "user.birth", dateFormat = "dd-MM-yyyy"),
             @Mapping(target = "role", source = "user.role"),
             @Mapping(target = "state", source = "user.state"),
-            @Mapping(target = "photo", source = "user.photo")
+            @Mapping(target = "photo", source = "user.photo"),
+            @Mapping(target = "code", source = "user.code")
     })
     UserDto userToDto(User user);
 
