@@ -12,8 +12,7 @@ public interface SignUpUserMapper {
     @Mappings({
             @Mapping(target = "email", source = "form.email"),
             @Mapping(target = "password", source = "form.password"),
-            @Mapping(target = "username", source = "form.username"),
-            @Mapping(target = "birth", source = "form.birth"),
+            @Mapping(target = "username", source = "form.username")
     })
     User signUpToUser(SignUpForm form);
 

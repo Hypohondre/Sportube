@@ -17,8 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -30,10 +29,10 @@ public class SignUpController {
 
     @GetMapping
     public String getSignUpPage(
-            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "errors", required = false) List<String> errors,
             Model model) {
 
-        model.addAttribute("error", error);
+        model.addAttribute("errors", errors);
         return "sign_up_page";
     }
 
@@ -47,7 +46,7 @@ public class SignUpController {
             List<String> errorsList = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            redirectAttributes.addAttribute("error", errorsList.toString());
+            redirectAttributes.addAttribute("errors", errorsList);
             return "redirect:/signUp";
         } else {
             Optional<UserDto> userCandidate = signUpService.signUp(signUpForm);
@@ -57,7 +56,7 @@ public class SignUpController {
 
                 return "redirect:/signIn";
             } else {
-                redirectAttributes.addAttribute("error", "This email have already existed!");
+                redirectAttributes.addAttribute("errors", Collections.singletonList("This email have already existed!"));
                 return "redirect:/signUp";
             }
         }

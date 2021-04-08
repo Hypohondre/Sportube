@@ -1,10 +1,10 @@
 package itis.semestrovka.models;
 
-import itis.semestrovka.dto.forms.SignUpForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -31,6 +31,7 @@ public class  User {
     private String username;
 
     @Column(name = "birth", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
 
     @Enumerated(value = EnumType.STRING)
@@ -65,7 +66,7 @@ public class  User {
     }
 
     public boolean isActive() {
-        return this.state == State.ACTIVE;
+        return this.state == State.ACTIVE || this.state == State.FULLACTIVE;
     }
 
     public boolean isAdmin() {

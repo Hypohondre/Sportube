@@ -1,15 +1,16 @@
 package itis.semestrovka.dto.forms;
 
-import itis.semestrovka.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,19 +18,12 @@ import java.sql.Date;
 public class SignUpForm {
     @Email(message = "Incorrect email")
     private String email;
-    @NotBlank(message = "Password must be not empty")
+    @NotBlank(message = "Password must contain 8 or more characters")
     private String password;
     @Pattern(regexp = "^(?!.*\\.\\.)(?!\\.)(?!.*\\.$)(?!\\d+$)[a-zA-Z0-9.]{5,50}$",
     message = "Incorrect username")
     private String username;
-    private Date birth;
-
-    public static User toUser(SignUpForm form) {
-        return User.builder()
-                .email(form.getEmail())
-                .password(form.getPassword())
-                .username(form.getUsername())
-                .birth(form.getBirth())
-                .build();
-    }
+    @Past(message = "Date must be in past time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
 }

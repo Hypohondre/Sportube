@@ -12,6 +12,11 @@
 <h2><a href="?lang=en">EN</a></h2>
 <h2><a href="?lang=ru">RU</a></h2>
 <h1><@spring.message 'sign_up_page.title'/></h1>
+<#if errors?has_content>
+    <#list errors as error>
+        <div>${error}</div>
+    </#list>
+</#if>
     <form method="post" action="/signUp" enctype="multipart/form-data">
         <label><@spring.message 'sign_up_page.email'/></label>
         <input type="text" name="email">

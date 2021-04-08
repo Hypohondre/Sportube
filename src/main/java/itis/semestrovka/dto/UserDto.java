@@ -1,12 +1,13 @@
 package itis.semestrovka.dto;
 
-import itis.semestrovka.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
+
 
 @Data
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class UserDto {
     private Long id;
     private String email;
     private String username;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     private String role;
     private String state;

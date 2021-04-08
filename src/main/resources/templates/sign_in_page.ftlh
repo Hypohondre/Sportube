@@ -8,7 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-
     <form method="post" action="/signIn">
         <label>Login</label>
         <input type="text" name="email">

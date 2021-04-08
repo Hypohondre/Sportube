@@ -8,12 +8,17 @@
     <title>Document</title>
     <style>
         img {
-
+            height: 200px;
+            width: 200px;
+            border-radius: 100px;
         }
     </style>
 </head>
 <body>
     <a href="/logout">logout</a> <br>
+    <#if user.state != "FULLACTIVE">
+        <div>Подтвердите email пж</div>
+    </#if>
     ${user.username} <br>
     ${user.email} <br>
     ${user.birth} <br>

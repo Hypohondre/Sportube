@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class SignUpServiceImpl  implements SignUpService {
 
     @Override
     public Optional<UserDto> signUp(SignUpForm form) {
-        if (userRepository.existsByEmail(form.getEmail())) return null;
+        if (userRepository.existsByEmail(form.getEmail())) return Optional.empty();
 
         formMapper = Mappers.getMapper(SignUpUserMapper.class);
         dtoMapper = Mappers.getMapper(UserDtoMapper.class);
@@ -38,6 +39,7 @@ public class SignUpServiceImpl  implements SignUpService {
         user.setPassword(passwordEncoder.encode(form.getPassword()));
         user.setPhoto("default.png");
         user.setCode(UUID.randomUUID().toString());
+        user.setBirth(Date.valueOf(form.getBirth()));
         userRepository.save(user);
 
         UserDto userDto = dtoMapper.userToDto(user);
