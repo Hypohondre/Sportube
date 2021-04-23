@@ -23,15 +23,12 @@ public class SignUpServiceImpl  implements SignUpService {
     @Qualifier("passwordEncoder")
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private SignUpUserMapper formMapper;
-    private UserDtoMapper dtoMapper;
+    private final SignUpUserMapper formMapper;
+    private final UserDtoMapper dtoMapper;
 
     @Override
     public Optional<UserDto> signUp(SignUpForm form) {
         if (userRepository.existsByEmail(form.getEmail())) return Optional.empty();
-
-        formMapper = Mappers.getMapper(SignUpUserMapper.class);
-        dtoMapper = Mappers.getMapper(UserDtoMapper.class);
 
         User user = formMapper.signUpToUser(form);
         user.setRole(User.Role.USER);

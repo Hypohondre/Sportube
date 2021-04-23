@@ -1,9 +1,8 @@
 package itis.semestrovka.services.interfaces;
 
 import itis.semestrovka.dto.UserDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ViewUserService {
-    List<UserDto> getUsers(int number);
+    Page<UserDto> getUsers(int number);
 }

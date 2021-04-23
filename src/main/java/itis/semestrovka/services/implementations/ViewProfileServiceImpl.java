@@ -15,16 +15,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ViewProfileServiceImpl implements ViewProfileService {
-    private UserDtoMapper mapper;
+    private final UserDtoMapper mapper;
     private final UserRepository repository;
 
     @Override
     public Optional<UserDto> getUser(UserDetailsImpl user) {
-        mapper = Mappers.getMapper(UserDtoMapper.class);
-
-        UserDto userDto = mapper.userToDto(user.getUser());
-
-        return Optional.ofNullable(userDto);
+        return Optional.ofNullable(mapper.userToDto(user.getUser()));
     }
 
     @Override

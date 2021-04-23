@@ -6,7 +6,7 @@ import itis.semestrovka.models.Token;
 import itis.semestrovka.models.User;
 import itis.semestrovka.repositories.TokenRepository;
 import itis.semestrovka.repositories.UserRepository;
-import itis.semestrovka.services.interfaces.SignInService;
+import itis.semestrovka.services.interfaces.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
-public class SignInServiceImpl implements SignInService {
+public class LoginServiceImpl implements LoginService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;

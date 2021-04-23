@@ -44,6 +44,7 @@ public class ViewProfileController {
             @RequestParam("file") MultipartFile file,
             @AuthenticationPrincipal UserDetailsImpl user
             ) throws IOException {
+
         String photo = uploadImgService.upload(file);
         Optional<UserDto> userCandidate = viewProfileService.getUser(user);
 

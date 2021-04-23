@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post" action="/signIn">
+    <form method="post" action="/login">
         <label>Login</label>
         <input type="text" name="email">
         <label>Password</label>
@@ -16,5 +16,13 @@
         <input type="checkbox" name="remember-me">
         <input type="submit">
     </form>
+
+    <script>
+        axios.get('users/' + number).then(
+            res => {
+                this.result = res.data;
+            }
+        );
+    </script>
 </body>
 </html>

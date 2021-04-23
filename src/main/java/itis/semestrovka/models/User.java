@@ -52,15 +52,6 @@ public class  User {
         USER, ADMIN
     }
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "user",
-            orphanRemoval = true
-    )
-    private List<UserCookie> userCookies;
-
-
     public User(Long id) {
         this.id = id;
     }

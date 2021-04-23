@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/style/navbar.css">
     <title>Document</title>
     <style>
         img {
@@ -15,7 +16,7 @@
     </style>
 </head>
 <body>
-    <a href="/logout">logout</a> <br>
+    <#include "navbar.ftlh">
     <#if user.state != "FULLACTIVE">
         <div>Подтвердите email пж</div>
     </#if>
