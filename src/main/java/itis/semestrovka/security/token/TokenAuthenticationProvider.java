@@ -1,6 +1,5 @@
 package itis.semestrovka.security.token;
 
-import itis.semestrovka.security.details.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,7 +22,6 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         tokenAuthentication.setAuthenticated(true);
         tokenAuthentication.setUserDetails(userDetails);
         return tokenAuthentication;
-
     }
 
     @Override

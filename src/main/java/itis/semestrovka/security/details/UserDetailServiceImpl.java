@@ -1,9 +1,7 @@
 package itis.semestrovka.security.details;
 
-import itis.semestrovka.models.Token;
-import itis.semestrovka.models.User;
+import itis.semestrovka.models.JwtToken;
 import itis.semestrovka.repositories.TokenRepository;
-import itis.semestrovka.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String value) throws UsernameNotFoundException {
-        Token token = tokenRepository.findByValue(value).orElseThrow((Supplier<Throwable>) () ->
+        JwtToken token = tokenRepository.findByValue(value).orElseThrow((Supplier<Throwable>) () ->
         new UsernameNotFoundException("Token not found"));
         return new UserDetailsImpl(token.getUser());
     }

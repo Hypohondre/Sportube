@@ -1,6 +1,7 @@
 package itis.semestrovka.services.implementations;
 
 import itis.semestrovka.dto.UserDto;
+import itis.semestrovka.dto.forms.SignUpForm;
 import itis.semestrovka.dto.mappers.UserDtoMapper;
 import itis.semestrovka.models.User;
 import itis.semestrovka.repositories.UserRepository;
@@ -24,5 +25,20 @@ public class ViewUserServiceImpl implements ViewUserService {
         Page<User> page = userRepository.findAll(pageable);
 
         return page.map(mapper::userToDto);
+    }
+
+    @Override
+    public UserDto createUser(SignUpForm form) {
+        return null;
+    }
+
+    @Override
+    public UserDto updateUser(Long id, SignUpForm form) {
+        return null;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+
     }
 }
