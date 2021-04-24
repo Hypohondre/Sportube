@@ -36,6 +36,11 @@ public class ViewUserServiceImpl implements ViewUserService {
     }
 
     @Override
+    public UserDto getUser(Long id) {
+        return dtoMapper.userToDto(userRepository.findById(id).orElseThrow(IllegalStateException::new));
+    }
+
+    @Override
     public UserDto createUser(SignUpForm form) {
         User user = formMapper.signUpToUser(form);
         user.setRole(User.Role.USER);

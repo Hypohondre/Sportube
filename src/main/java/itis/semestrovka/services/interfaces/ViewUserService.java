@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 public interface ViewUserService {
     Page<UserDto> getUsers(int number);
 
+    UserDto getUser(Long id);
+
     UserDto createUser(SignUpForm form);
 
     UserDto updateUser(Long id, SignUpForm form);
