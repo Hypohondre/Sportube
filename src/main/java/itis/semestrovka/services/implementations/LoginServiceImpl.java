@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.function.Supplier;
 
 @Service
@@ -30,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
 
     @SneakyThrows
     @Override
-    public JwtToken login(SignInForm signInForm) {
+    public TokenDto login(SignInForm signInForm) {
         User user = userRepository.findByEmail(signInForm.getLogin()).orElseThrow
                 ((Supplier<Throwable>) () -> new UsernameNotFoundException("User not found"));
 
@@ -45,11 +44,11 @@ public class LoginServiceImpl implements LoginService {
                     .withClaim("code", user.getCode())
                     .sign(Algorithm.HMAC256(key));
             JwtToken token = JwtToken.builder()
-                    .value(tokenValue)
                     .user(user)
+                    .value(tokenValue)
                     .build();
             tokenRepository.save(token);
-            return token;
+            return TokenDto.builder().token(tokenValue).build();
         } else {
             throw new UsernameNotFoundException("Invalid username or password");
         }

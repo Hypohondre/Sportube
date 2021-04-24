@@ -4,6 +4,7 @@ import itis.semestrovka.dto.UserDto;
 import itis.semestrovka.dto.forms.SignUpForm;
 import itis.semestrovka.dto.mappers.SignUpUserMapper;
 import itis.semestrovka.dto.mappers.UserDtoMapper;
+import itis.semestrovka.models.Playlist;
 import itis.semestrovka.models.User;
 import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.services.interfaces.SignUpService;
@@ -37,6 +38,10 @@ public class SignUpServiceImpl  implements SignUpService {
         user.setPhoto("default.png");
         user.setCode(UUID.randomUUID().toString());
         user.setBirth(Date.valueOf(form.getBirth()));
+        user.getPlaylists().add(Playlist.builder()
+                .name(user.getUsername())
+                .user(user)
+                .build());
         userRepository.save(user);
 
         UserDto userDto = dtoMapper.userToDto(user);

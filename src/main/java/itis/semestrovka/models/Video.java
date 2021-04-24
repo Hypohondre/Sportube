@@ -27,4 +27,8 @@ public class Video {
     private Date duration;
 
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "playlist_id", nullable = false)
+    private Playlist playlist;
 }

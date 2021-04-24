@@ -15,4 +15,10 @@ public class PageController {
 
     @GetMapping("/signIn")
     public String getSignInPage() {return "sign_in_page";}
+
+    @GetMapping()
+    public String getPage() {return "";}
+
+    @GetMapping("/progile")
+    public String getProfilePage() {return "profile_page";}
 }
