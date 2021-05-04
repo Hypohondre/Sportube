@@ -37,6 +37,7 @@ public class LoginServiceImpl implements LoginService {
             String tokenValue = JWT.create()
                     .withSubject(user.getId().toString())
                     .withClaim("email", user.getEmail())
+                    .withClaim("username", user.getUsername())
                     .withClaim("role", user.getRole().toString())
                     .withClaim("state", user.getState().toString())
                     .withClaim("birth", user.getBirth().toString())

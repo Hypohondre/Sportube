@@ -6,6 +6,7 @@ import itis.semestrovka.dto.mappers.SignUpUserMapper;
 import itis.semestrovka.dto.mappers.UserDtoMapper;
 import itis.semestrovka.models.Playlist;
 import itis.semestrovka.models.User;
+import itis.semestrovka.repositories.PlaylistRepository;
 import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.services.interfaces.ViewUserService;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,11 @@ public class ViewUserServiceImpl implements ViewUserService {
     private final UserDtoMapper dtoMapper;
     private final SignUpUserMapper formMapper;
     private final PasswordEncoder passwordEncoder;
+    private final PlaylistRepository playlistRepository;
+
 
     @Override
-    public Page<UserDto> getUsers(int number) {
-        Pageable pageable = PageRequest.of(number, 2);
+    public Page<UserDto> getUsers(Pageable pageable) {
         Page<User> page = userRepository.findAll(pageable);
 
         return page.map(dtoMapper::userToDto);
@@ -49,11 +51,12 @@ public class ViewUserServiceImpl implements ViewUserService {
         user.setPhoto("default.png");
         user.setCode(UUID.randomUUID().toString());
         user.setBirth(Date.valueOf(form.getBirth()));
-        user.getPlaylists().add(Playlist.builder()
+        userRepository.save(user);
+        Playlist playlist = Playlist.builder()
                 .name(user.getUsername())
                 .user(user)
-                .build());
-        userRepository.save(user);
+                .build();
+        playlistRepository.save(playlist);
         return dtoMapper.userToDto(user);
     }
 

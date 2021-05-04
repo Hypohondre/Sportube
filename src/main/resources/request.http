@@ -9,3 +9,18 @@ Content-Type: application/json
   "login": "r@mail.ru",
   "password": "12345678"
 }
+###
+POST http://localhost:8080/videos
+Content-Type: application/json
+
+{
+  "preview": "default.png",
+  "name": "test",
+  "size": "125.3",
+  "duration": "",
+  "description": "test video"
+}
+###
+GET http://localhost:8080/logout
+###
+DELETE http://localhost:8080/users/5

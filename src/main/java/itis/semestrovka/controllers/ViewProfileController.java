@@ -17,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
 
-@Controller
+//@Controller
 @RequiredArgsConstructor
-@RequestMapping("/profile")
+//@RequestMapping("/profile")
 public class ViewProfileController {
     private final UploadImgService uploadImgService;
     private final ViewProfileService viewProfileService;

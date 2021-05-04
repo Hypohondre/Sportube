@@ -6,6 +6,7 @@ import itis.semestrovka.dto.mappers.SignUpUserMapper;
 import itis.semestrovka.dto.mappers.UserDtoMapper;
 import itis.semestrovka.models.Playlist;
 import itis.semestrovka.models.User;
+import itis.semestrovka.repositories.PlaylistRepository;
 import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.services.interfaces.SignUpService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class SignUpServiceImpl  implements SignUpService {
     private final UserRepository userRepository;
     private final SignUpUserMapper formMapper;
     private final UserDtoMapper dtoMapper;
+    private final PlaylistRepository playlistRepository;
 
     @Override
     public Optional<UserDto> signUp(SignUpForm form) {
@@ -38,11 +40,13 @@ public class SignUpServiceImpl  implements SignUpService {
         user.setPhoto("default.png");
         user.setCode(UUID.randomUUID().toString());
         user.setBirth(Date.valueOf(form.getBirth()));
-        user.getPlaylists().add(Playlist.builder()
+        userRepository.save(user);
+
+        Playlist playlist = Playlist.builder()
                 .name(user.getUsername())
                 .user(user)
-                .build());
-        userRepository.save(user);
+                .build();
+        playlistRepository.save(playlist);
 
         UserDto userDto = dtoMapper.userToDto(user);
 

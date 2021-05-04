@@ -8,8 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -44,9 +44,6 @@ public class  User {
     private String photo;
 
     private String code;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Playlist> playlists = new ArrayList<>();
 
     public enum State {
         ACTIVE, BANNED, FULLACTIVE

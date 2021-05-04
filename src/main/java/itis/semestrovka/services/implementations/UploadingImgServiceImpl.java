@@ -16,7 +16,6 @@ public class UploadingImgServiceImpl implements UploadImgService {
 
     @Override
     public String upload(MultipartFile file) {
-        if (file != null) {
             File photoPath = new File(uploadPath);
 
             if(!photoPath.exists()) photoPath.mkdir();
@@ -29,8 +28,5 @@ public class UploadingImgServiceImpl implements UploadImgService {
             } catch (IOException e) {throw new IllegalStateException(e);}
 
             return filename;
-        } else {
-         return null;
-        }
     }
 }

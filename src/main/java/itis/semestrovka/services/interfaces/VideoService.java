@@ -1,15 +1,22 @@
 package itis.semestrovka.services.interfaces;
 
 import itis.semestrovka.dto.forms.VideoForm;
+import itis.semestrovka.models.User;
 import itis.semestrovka.models.Video;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoService {
-    Page<Video> getVideos(Integer page);
+    Page<Video> getVideos(Pageable pageable);
 
-    Video addVideo(VideoForm form);
+    Page<Video> getAllByPlaylist(Long id, Pageable pageable);
 
-    Video updateVideo(Long id, VideoForm form);
+    Video getVideo(Long id);
 
-    void deleteVideo(Long id);
+    Video addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile video, Long userId);
+
+    Video updateVideo(Long id, VideoForm form, Long userId);
+
+    void deleteVideo(Long id, Long userId);
 }

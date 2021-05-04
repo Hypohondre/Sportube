@@ -4,34 +4,29 @@ import itis.semestrovka.dto.TokenDto;
 import itis.semestrovka.dto.forms.SignInForm;
 import itis.semestrovka.services.interfaces.LoginService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class SignInController {
     private final LoginService login;
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody SignInForm form, HttpServletResponse response, HttpServletRequest request) {
-        List<Cookie> list = Arrays.stream(request.getCookies()).filter(x->x.getName().equals("token")).collect(Collectors.toList());
-        if (!list.isEmpty()) {
-            list.get(0).setMaxAge(-1);
-        }
-        TokenDto token = login.login(form);
-        Cookie cookie = new Cookie("token", token.getToken());
+    public String login(SignInForm form,
+                        HttpServletResponse response,
+                        @CookieValue Optional<Cookie> token) {
+        TokenDto newToken = login.login(form);
+        Cookie cookie = new Cookie("token", newToken.getToken());
         cookie.setMaxAge(60*60*24*356);
         response.addCookie(cookie);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        return "redirect:/profile";
     }
 }

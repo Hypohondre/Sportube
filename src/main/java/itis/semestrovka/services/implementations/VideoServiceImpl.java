@@ -2,50 +2,91 @@ package itis.semestrovka.services.implementations;
 
 import itis.semestrovka.dto.forms.VideoForm;
 import itis.semestrovka.dto.mappers.VideoFormMapper;
+import itis.semestrovka.models.Playlist;
+import itis.semestrovka.models.User;
 import itis.semestrovka.models.Video;
+import itis.semestrovka.repositories.PlaylistRepository;
+import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.repositories.VideoRepository;
 import itis.semestrovka.services.interfaces.VideoService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
+import java.io.FileNotFoundException;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
 public class VideoServiceImpl implements VideoService {
     private final VideoFormMapper mapper;
     private final VideoRepository repository;
-
+    private final PlaylistRepository playlistRepository;
+    private final UploadingImgServiceImpl uploadingImgService;
+    private final UserRepository userRepository;
 
     @Override
-    public Page<Video> getVideos(Integer page) {
-        return null;
+    public Page<Video> getVideos(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
-    public Video addVideo(VideoForm form) {
+    public Page<Video> getAllByPlaylist(Long id, Pageable pageable) {
+        Playlist playlist = playlistRepository.findById(id)
+                .orElseThrow(IllegalStateException::new);
+        return repository.findAllByPlaylistEquals(playlist,pageable);
+    }
+
+    @SneakyThrows
+    @Override
+    public Video addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile videoFile, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow((Supplier<Throwable>) () -> new UsernameNotFoundException("user not found"));
+
         Video video = mapper.formToVideo(form);
-        video.setDuration(Date.valueOf(form.getDuration()));
+        String videoPath = uploadingImgService.upload(videoFile);
+        String previewPath = uploadingImgService.upload(preview);
+
+        video.setPreview(previewPath);
+        video.setFile(videoPath);
+        video.setCreator(user);
+        video.setSize(videoFile.getSize());
+
+        Playlist playlist = playlistRepository.findByName(username).orElseThrow(IllegalStateException::new);
+        playlist.addVideo(video);
         return repository.save(video);
     }
 
     @Override
-    public Video updateVideo(Long id, VideoForm form) {
-        Video videoForUpdate = repository.findById(id).orElseThrow(IllegalStateException::new);
-        videoForUpdate.setDescription(form.getDescription());
-        videoForUpdate.setName(form.getName());
-        videoForUpdate.setDuration(Date.valueOf(form.getDuration()));
-        videoForUpdate.setPreview(form.getPreview());
-
-        repository.save(videoForUpdate);
-        return repository.save(videoForUpdate);
+    public Video getVideo(Long id) {
+        return repository.findById(id).orElseThrow(IllegalStateException::new);
     }
 
     @Override
-    public void deleteVideo(Long id) {
+    public Video updateVideo(Long id, VideoForm form, Long userId) {
+        Video videoForUpdate = repository.findById(id).orElseThrow(IllegalStateException::new);
+        if (videoForUpdate.getCreator().getId().equals(userId)) {
+            videoForUpdate.setDescription(form.getDescription());
+            videoForUpdate.setName(form.getName());
+
+            repository.save(videoForUpdate);
+            return repository.save(videoForUpdate);
+        } else {
+            throw new AccessDeniedException("you can not update this video");
+        }
+    }
+
+    @SneakyThrows
+    @Override
+    public void deleteVideo(Long id, Long userId) {
         Video videoForDelete = repository.findById(id).orElseThrow(IllegalStateException::new);
 
-        repository.delete(videoForDelete);
+        if (videoForDelete.getCreator().getId().equals(userId)) repository.delete(videoForDelete);
+        else throw new AccessDeniedException("you can not delete this video");
     }
 }

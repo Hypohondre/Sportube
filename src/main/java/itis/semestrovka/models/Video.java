@@ -1,34 +1,43 @@
 package itis.semestrovka.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String preview;
 
     private String name;
 
-    private Double size;
+    private String file;
 
-    private Date duration;
+    private Long size;
 
     private String description;
 
+    @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "playlist_id", nullable = false)
+    @JoinColumn(name = "user_id")
+    private User creator;
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "playlist_id")
     private Playlist playlist;
 }

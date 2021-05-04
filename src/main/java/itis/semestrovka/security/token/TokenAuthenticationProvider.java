@@ -25,7 +25,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     }
 
     @Override
-    public boolean supports(Class<?> aClass) {
-        return TokenAuthentication.class.equals(aClass);
+    public boolean supports(Class<?> authentication) {
+        return TokenAuthentication.class.equals(authentication);
     }
 }
