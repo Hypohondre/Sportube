@@ -17,7 +17,7 @@ public class TemplateResolverImpl implements TemplateResolver {
     private final Configuration configuration;
 
     @Override
-    public String process(String name, Map<String, String> root) {
+    public String process(String name, Map<String, Object> root) {
         try {
             Template t = configuration.getTemplate(name);
             return FreeMarkerTemplateUtils.processTemplateIntoString(t, root);

@@ -13,7 +13,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserDto getUser(String jwt) {
         DecodedJWT decodedJWT= JWT.decode(jwt);
-        UserDto user = UserDto.builder()
+        return getUserDto(decodedJWT);
+    }
+
+    private UserDto getUserDto(DecodedJWT decodedJWT) {
+        return UserDto.builder()
                 .id(Long.parseLong(decodedJWT.getSubject()))
                 .email(decodedJWT.getClaim("email").asString())
                 .username(decodedJWT.getClaim("username").asString())
@@ -23,6 +27,5 @@ public class ProfileServiceImpl implements ProfileService {
                 .role(decodedJWT.getClaim("role").asString())
                 .state(decodedJWT.getClaim("state").asString())
                 .build();
-        return user;
     }
 }

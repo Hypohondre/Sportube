@@ -21,9 +21,6 @@ public class PublicLoggingAspect {
     @Pointcut("execution(public * itis.semestrovka.services.implementations.ProfileServiceImpl.*(..))")
     public void getPublicInfo() {}
 
-    @Pointcut("execution(private * itis.semestrovka.services.implementations.ProfileServiceImpl.*(..))")
-    public void getPrivateInfo() {}
-
     @Around(value = "getPublicInfo()")
     public Object log(ProceedingJoinPoint joinPoint) throws Throwable{
         logger.log(Level.INFO, "Method: " + joinPoint.getSignature());

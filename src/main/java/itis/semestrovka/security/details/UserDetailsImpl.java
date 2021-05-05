@@ -26,6 +26,8 @@ public class UserDetailsImpl implements UserDetails {
         return this.user;
     }
 
+    public void setUser(User user) {this.user = user;}
+
     @Override
     public String getPassword() {
         return user.getPassword();
