@@ -35,6 +35,12 @@ public class PlaylistController {
         return service.getPlaylist(id);
     }
 
+    @PreAuthorize("permitAll()")
+    @GetMapping("/getAllPlaylistsByUser")
+    public Page<Playlist> getAllByUser(@CookieValue Cookie token, @PageableDefault(size = 1, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        return service.getAllByUser(getIdFromCookie(token), pageable);
+    }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/playlists")
     public RedirectView addPlaylist(PlaylistForm form,
@@ -45,8 +51,9 @@ public class PlaylistController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/playlists/{id}")
-    public Playlist updatePlaylist(@PathVariable Long id ,PlaylistForm form, @CookieValue Cookie token) {
-        return service.updatePlaylist(id, form, getIdFromCookie(token));
+    public RedirectView updatePlaylist(@PathVariable Long id ,PlaylistForm form, @CookieValue Cookie token) {
+        if (service.updatePlaylist(id, form, getIdFromCookie(token)) == null) throw new IllegalStateException();
+        return new RedirectView("/userPlaylists");
     }
 
     @PreAuthorize("isAuthenticated()")

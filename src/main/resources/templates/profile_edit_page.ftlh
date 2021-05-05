@@ -10,6 +10,7 @@
     <title>Edit profile</title>
 </head>
 <body>
+<#include "navbar.ftlh">
 <div id="wrapper">
     <form method="post" v-bind:action="'/users/' + result.id">
         <label> <p>Name</p>

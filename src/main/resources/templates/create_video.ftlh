@@ -8,6 +8,7 @@
     <title>Create video</title>
 </head>
 <body>
+<#include "navbar.ftlh">
     <form method="post" action="/videos" enctype="multipart/form-data">
         <label>Name
         <input type="text" name="name"></label>

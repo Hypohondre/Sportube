@@ -29,10 +29,20 @@ public class PlaylistServiceImpl implements PlaylistService {
         return repository.findAll(pageable);
     }
 
+
+
     @Override
     public Playlist getPlaylist(Long id) {
         return repository.findById(id)
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    @SneakyThrows
+    @Override
+    public Page<Playlist> getAllByUser(Long userId, Pageable pageable) {
+        User user = userRepository.findById(userId)
+                .orElseThrow((Supplier<Throwable>) () -> new UsernameNotFoundException("user not found"));
+        return repository.findAllByUserEquals(user, pageable);
     }
 
     @SneakyThrows

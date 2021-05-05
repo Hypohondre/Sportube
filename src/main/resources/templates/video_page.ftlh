@@ -16,12 +16,15 @@
     </style>
 </head>
 <body>
+<#include "navbar.ftlh">
     <div id="wrapper">
         <video v-bind:src="'http://localhost:8080/getVideo/' + result.file" controls>
-<#--            <source v-bind:src="'http://localhost:8080/getVideo/' + result.file" type="video/mp4">-->
         </video>
         <p>{{ result.name }}</p>
         <p>size: {{ result.size }}</p>
+        <p>creator: {{ result.creator.username }}</p>
+        <p>description: {{ result.description }}</p>
+        <a v-bind:href="'/editVideo?id=' + result.id">edit</a>
     </div>
 
 <script>

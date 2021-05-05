@@ -10,6 +10,7 @@
     <title>Playlists</title>
 </head>
 <body>
+<#include "navbar.ftlh">
 <hr>
 <div id="wrapper">
     <div class="post" v-for="playlist in result.content" >
@@ -27,7 +28,7 @@
         el: "#wrapper",
         data: {result: []},
         mounted() {
-            axios.get('/playlists').then(
+            axios.get('/getAllPlaylistsByUser').then(
                 res => {
                     this.result = res.data;
                 }
@@ -38,7 +39,7 @@
             navigate:
                 function(event) {
                     let number = event.target.name;
-                    axios.get('/playlists?page=' + number).then(
+                    axios.get('/getAllPlaylistsByUser?page=' + number).then(
                         res => {
                             this.result = res.data;
                         }

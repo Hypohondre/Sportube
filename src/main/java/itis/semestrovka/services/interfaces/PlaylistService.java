@@ -14,6 +14,8 @@ public interface PlaylistService {
 
     Playlist getPlaylist(Long id);
 
+    Page<Playlist> getAllByUser(Long userId, Pageable pageable);
+
     Playlist addPlaylist(PlaylistForm form, Long id);
 
     Playlist updatePlaylist(Long id, PlaylistForm form, Long userId);

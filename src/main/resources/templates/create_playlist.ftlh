@@ -8,6 +8,7 @@
     <title>Create playlist</title>
 </head>
 <body>
+<#include "navbar.ftlh">
     <form method="post" action="/playlists">
         <input type="text" name="name">
         <input type="submit">

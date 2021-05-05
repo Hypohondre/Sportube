@@ -36,7 +36,7 @@ public class Playlist {
         video.setPlaylist(null);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 }

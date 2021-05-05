@@ -61,6 +61,23 @@ public class VideoFileController {
         return new FileSystemResource(file);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/videos/{id}/{playlistId}")
+    public RedirectView replaceVideo(@PathVariable Long id,
+                                     @PathVariable Long playlistId,
+                                     @CookieValue Cookie token) {
+        if (service.replaceVideo(id, playlistId, getIdFromCookie(token)) == null) throw new IllegalStateException();
+        return new RedirectView("/playlist?id=" + playlistId);
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/userVideos/{userId}")
+    public Page<Video> getAllUserVideos(@PathVariable Long userId,
+                                        @PageableDefault(size = 1, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        return service.getAllUserVideos(userId, pageable);
+    }
+
+
     @SneakyThrows(FileNotFoundException.class)
     @PostMapping("/videos")
     public RedirectView addVideo(VideoForm form,
@@ -74,10 +91,16 @@ public class VideoFileController {
         return new RedirectView("/userPlaylists");
     }
 
+    @SneakyThrows
     @PreAuthorize("isAuthenticated()")
-    @PutMapping("/video/{id}")
-    public ResponseEntity<Video> updateVideo(@PathVariable Long id ,@RequestBody VideoForm form, @CookieValue Cookie token) {
-        return new ResponseEntity<>(service.updateVideo(id, form, getIdFromCookie(token)), HttpStatus.OK);
+    @PostMapping("/video/{id}")
+    public RedirectView updateVideo(@PathVariable Long id,
+                                    VideoForm form,
+                                    @RequestParam("preview") MultipartFile preview,
+                                    @CookieValue Cookie token) {
+        if (preview == null) throw new FileNotFoundException();
+        if (service.updateVideo(id, form, getIdFromCookie(token), preview) == null) throw new IllegalStateException();
+        return new RedirectView("/video?id=" + id);
     }
 
     @PreAuthorize("isAuthenticated()")

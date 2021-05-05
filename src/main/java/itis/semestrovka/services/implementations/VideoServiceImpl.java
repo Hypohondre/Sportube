@@ -11,6 +11,7 @@ import itis.semestrovka.repositories.VideoRepository;
 import itis.semestrovka.services.interfaces.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -63,16 +64,42 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public Video replaceVideo(Long id, Long playlistId, Long userId) {
+        Video video = repository.findById(id)
+                .orElseThrow(IllegalStateException::new);
+
+        if (video.getCreator().getId().equals(userId)) {
+            Playlist originalPlaylist = video.getPlaylist();
+            originalPlaylist.removeVideo(video);
+
+            Playlist playlist = playlistRepository.findById(playlistId)
+                    .orElseThrow(IllegalStateException::new);
+            playlist.addVideo(video);
+            return video;
+        } else return null;
+    }
+
+    @SneakyThrows
+    @Override
+    public Page<Video> getAllUserVideos(Long userId, Pageable pageable) {
+        User user = userRepository.findById(userId)
+                .orElseThrow((Supplier<Throwable>) () -> new UsernameNotFoundException("user not found"));
+        return repository.findAllByCreatorEquals(user, pageable);
+    }
+
+    @Override
     public Video getVideo(Long id) {
         return repository.findById(id).orElseThrow(IllegalStateException::new);
     }
 
     @Override
-    public Video updateVideo(Long id, VideoForm form, Long userId) {
+    public Video updateVideo(Long id, VideoForm form, Long userId, MultipartFile preview) {
         Video videoForUpdate = repository.findById(id).orElseThrow(IllegalStateException::new);
         if (videoForUpdate.getCreator().getId().equals(userId)) {
             videoForUpdate.setDescription(form.getDescription());
             videoForUpdate.setName(form.getName());
+            String previewPath = uploadingImgService.upload(preview);
+            videoForUpdate.setPreview(previewPath);
 
             repository.save(videoForUpdate);
             return repository.save(videoForUpdate);

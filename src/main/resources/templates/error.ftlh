@@ -14,6 +14,7 @@
     </style>
 </head>
 <body>
+<#include "navbar.ftlh">
 <h1>${error}</h1>
 </body>
 </html>

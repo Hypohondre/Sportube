@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,9 +19,7 @@ public class SignInController {
 
     @PreAuthorize("permitAll()")
     @PostMapping("/login")
-    public String login(SignInForm form,
-                        HttpServletResponse response,
-                        @CookieValue Optional<Cookie> token) {
+    public String login(SignInForm form, HttpServletResponse response) {
         TokenDto newToken = login.login(form);
         Cookie cookie = new Cookie("token", newToken.getToken());
         cookie.setMaxAge(60*60*24*356);

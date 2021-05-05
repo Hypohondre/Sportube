@@ -8,17 +8,31 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Playlist</title>
+    <style>
+        img {
+            height: 100px;
+            width: 100px;
+        }
+
+        .userImg {
+            height: 25px;
+            width: 25px;
+        }
+    </style>
 </head>
 <body>
+<#include "navbar.ftlh">
     <div id="wrapper">
         <h1>{{ result.name }}</h1>
-        <p>{{ result.user.username }}</p>
+        <p>Creator: {{ result.user.username }}</p>
+        <a v-bind:href="'/editPlaylist?id=' + result.id">edit</a>
     </div>
 <hr>
     <div id="videos">
         <div class="video" v-for="video in result.content" >
+            <img v-bind:src="'img/' + video.preview">
             <p>{{ video.name }}</p>
-            <p>{{ video.id }}</p>
+            <span>{{ video.creator.username }}</span> <img v-bind:src="'img/' + video.creator.photo" class="userImg">
             <a v-bind:href="'/video?id=' + video.id">more</a>
             <hr>
         </div>

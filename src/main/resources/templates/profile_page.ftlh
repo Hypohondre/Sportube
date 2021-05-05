@@ -7,7 +7,6 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/static/style/navbar.css">
     <title>Document</title>
     <style>
         img {
@@ -15,17 +14,20 @@
             width: 200px;
             border-radius: 100px;
         }
+
+        #wrapper {
+            margin-top: 100px;
+        }
     </style>
 </head>
 <body>
+<#include "navbar.ftlh">
 <div id="wrapper">
-    <a href="/createPlaylist">create playlist</a>
-    <a href="/customLogout">logout</a>
-    <div class="userInfo">Username : {{ result.username }}</div>
-    <div class="userInfo">Email : {{ result.email }}</div>
-    <div class="userInfo">Birth : {{ result.birth }}</div>
-    <div class="userInfo">Role : {{ result.role }}</div>
-    <div class="userInfo">State : {{ result.state }}</div>
+        <p><div class="userInfo">Username : {{ result.username }}</div></p>
+    <p><div class="userInfo">Email : {{ result.email }}</div></p>
+    <p><div class="userInfo">Birth : {{ result.birth }}</div></p>
+    <p><div class="userInfo">Role : {{ result.role }}</div></p>
+    <p> <div class="userInfo">State : {{ result.state }}</div></p>
     <img v-bind:src="'img/' + result.photo">
     <a href="/editProfile">edit</a>
 </div>

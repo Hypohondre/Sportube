@@ -10,14 +10,17 @@ import itis.semestrovka.repositories.PlaylistRepository;
 import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.services.interfaces.ViewUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 
 @Service
@@ -60,10 +63,16 @@ public class ViewUserServiceImpl implements ViewUserService {
         return dtoMapper.userToDto(user);
     }
 
+    @SneakyThrows
     @Override
     public UserDto updateUser(Long id, SignUpForm form) {
         User userForUpdate = userRepository.findById(id)
                 .orElseThrow(IllegalStateException::new);
+
+        Playlist playlist = playlistRepository.findByName(userForUpdate.getUsername())
+                .orElseThrow((Supplier<Throwable>) () -> new UsernameNotFoundException("user not found"));
+        playlist.setName(form.getUsername());
+        playlistRepository.save(playlist);
 
         userForUpdate.setUsername(form.getUsername());
         userForUpdate.setEmail(form.getEmail());

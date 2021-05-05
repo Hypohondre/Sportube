@@ -14,9 +14,13 @@ public interface VideoService {
 
     Video getVideo(Long id);
 
+    Video replaceVideo(Long id, Long playlistId, Long userId);
+
+    Page<Video> getAllUserVideos(Long userId, Pageable pageable);
+
     Video addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile video, Long userId);
 
-    Video updateVideo(Long id, VideoForm form, Long userId);
+    Video updateVideo(Long id, VideoForm form, Long userId, MultipartFile preview);
 
     void deleteVideo(Long id, Long userId);
 }

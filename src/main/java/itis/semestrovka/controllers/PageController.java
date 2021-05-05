@@ -55,4 +55,14 @@ public class PageController {
     public String getVideoPage() {
         return "video_page";
     }
+
+    @GetMapping("/editPlaylist")
+    public String getPlaylistEditPage() {
+        return "edit_playlist";
+    }
+
+    @GetMapping("/editVideo")
+    public String getVideoEditPage() {
+        return "edit_video";
+    }
 }
