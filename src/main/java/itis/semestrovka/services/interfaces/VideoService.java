@@ -1,5 +1,6 @@
 package itis.semestrovka.services.interfaces;
 
+import itis.semestrovka.dto.VideoDto;
 import itis.semestrovka.dto.forms.VideoForm;
 import itis.semestrovka.models.User;
 import itis.semestrovka.models.Video;
@@ -12,15 +13,15 @@ public interface VideoService {
 
     Page<Video> getAllByPlaylist(Long id, Pageable pageable);
 
-    Video getVideo(Long id);
+    VideoDto getVideo(Long id);
 
-    Video replaceVideo(Long id, Long playlistId, Long userId);
+    VideoDto replaceVideo(Long id, Long playlistId, Long userId);
 
     Page<Video> getAllUserVideos(Long userId, Pageable pageable);
 
-    Video addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile video, Long userId);
+    VideoDto addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile video, Long userId);
 
-    Video updateVideo(Long id, VideoForm form, Long userId, MultipartFile preview);
+    VideoDto updateVideo(Long id, VideoForm form, Long userId, MultipartFile preview);
 
     void deleteVideo(Long id, Long userId);
 }

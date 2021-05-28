@@ -29,21 +29,21 @@ public class ViewUsersController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(viewUserService.getUser(id), HttpStatus.OK);
+    public UserDto getUser(@PathVariable Long id) {
+        return viewUserService.getUser(id);
     }
 
     @PreAuthorize("permitAll()")
     @PostMapping("/users")
-    public ResponseEntity<UserDto> createUsers(SignUpForm form) {
-        return new ResponseEntity<>(viewUserService.createUser(form), HttpStatus.OK);
+    public UserDto createUsers(SignUpForm form) {
+        return viewUserService.createUser(form);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/users/{id}")
     public RedirectView updateUsers(@PathVariable Long id, SignUpForm form) {
-        if (viewUserService.updateUser(id, form) == null) throw new IllegalStateException();
-        return new RedirectView("/customLogout");
+        viewUserService.updateUser(id, form);
+        return new RedirectView("/logout");
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

@@ -1,7 +1,6 @@
 package itis.semestrovka.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ public class Playlist {
     private Long id;
 
     private String name;
-
+    
     @JsonBackReference
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Video> videos = new HashSet<>();

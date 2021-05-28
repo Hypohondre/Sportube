@@ -1,5 +1,6 @@
 package itis.semestrovka.services.interfaces;
 
+import itis.semestrovka.dto.PlaylistDto;
 import itis.semestrovka.dto.forms.PlaylistForm;
 import itis.semestrovka.models.Playlist;
 import itis.semestrovka.models.User;
@@ -12,13 +13,13 @@ import java.util.List;
 public interface PlaylistService {
     Page<Playlist> getAll(Pageable pageable);
 
-    Playlist getPlaylist(Long id);
+    PlaylistDto getPlaylist(Long id);
 
     Page<Playlist> getAllByUser(Long userId, Pageable pageable);
 
-    Playlist addPlaylist(PlaylistForm form, Long id);
+    PlaylistDto addPlaylist(PlaylistForm form, Long id);
 
-    Playlist updatePlaylist(Long id, PlaylistForm form, Long userId);
+    PlaylistDto updatePlaylist(Long id, PlaylistForm form, Long userId);
 
     void deletePlaylist(Long id, Long userId);
 }

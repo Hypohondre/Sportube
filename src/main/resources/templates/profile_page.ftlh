@@ -23,28 +23,15 @@
 <body>
 <#include "navbar.ftlh">
 <div id="wrapper">
-        <p><div class="userInfo">Username : {{ result.username }}</div></p>
-    <p><div class="userInfo">Email : {{ result.email }}</div></p>
-    <p><div class="userInfo">Birth : {{ result.birth }}</div></p>
-    <p><div class="userInfo">Role : {{ result.role }}</div></p>
-    <p> <div class="userInfo">State : {{ result.state }}</div></p>
-    <img v-bind:src="'img/' + result.photo">
+        <p><div class="userInfo">Username : ${ user.username }</div></p>
+    <p><div class="userInfo">Email : ${ user.email }</div></p>
+    <p><div class="userInfo">Birth : ${ user.birth }</div></p>
+    <p><div class="userInfo">Role : ${ user.role }</div></p>
+    <p> <div class="userInfo">State : ${ user.state }</div></p>
+    <img src="img/${user.photo}">
     <a href="/editProfile">edit</a>
 </div>
 
-
-    <script>
-        let vm = new Vue({
-            el: "#wrapper",
-            data: {result:[]},
-            mounted() {
-                axios.get('/getProfile').then(
-                    res => {
-                        this.result = res.data;
-                    }
-                );
-            }
-        });
-    </script>
+<a href="/sendMail">send user to email</a>
 </body>
 </html>

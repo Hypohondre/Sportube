@@ -1,5 +1,6 @@
 package itis.semestrovka.services.implementations;
 
+import itis.semestrovka.dto.VideoDto;
 import itis.semestrovka.dto.forms.VideoForm;
 import itis.semestrovka.dto.mappers.VideoFormMapper;
 import itis.semestrovka.models.Playlist;
@@ -45,7 +46,7 @@ public class VideoServiceImpl implements VideoService {
 
     @SneakyThrows
     @Override
-    public Video addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile videoFile, Long userId) {
+    public VideoDto addVideo(VideoForm form, String username, MultipartFile preview, MultipartFile videoFile, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow((Supplier<Throwable>) () -> new UsernameNotFoundException("user not found"));
 
@@ -60,11 +61,21 @@ public class VideoServiceImpl implements VideoService {
 
         Playlist playlist = playlistRepository.findByName(username).orElseThrow(IllegalStateException::new);
         playlist.addVideo(video);
-        return repository.save(video);
+
+        Video newVideo = repository.save(video);
+        return VideoDto.builder()
+                .id(newVideo.getId())
+                .name(newVideo.getName())
+                .description(newVideo.getDescription())
+                .file(newVideo.getFile())
+                .creator(newVideo.getCreator())
+                .preview(newVideo.getPreview())
+                .size(newVideo.getSize())
+                .build();
     }
 
     @Override
-    public Video replaceVideo(Long id, Long playlistId, Long userId) {
+    public VideoDto replaceVideo(Long id, Long playlistId, Long userId) {
         Video video = repository.findById(id)
                 .orElseThrow(IllegalStateException::new);
 
@@ -75,7 +86,15 @@ public class VideoServiceImpl implements VideoService {
             Playlist playlist = playlistRepository.findById(playlistId)
                     .orElseThrow(IllegalStateException::new);
             playlist.addVideo(video);
-            return video;
+            return VideoDto.builder()
+                    .id(video.getId())
+                    .name(video.getName())
+                    .description(video.getDescription())
+                    .file(video.getFile())
+                    .creator(video.getCreator())
+                    .preview(video.getPreview())
+                    .size(video.getSize())
+                    .build();
         } else return null;
     }
 
@@ -88,12 +107,21 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Video getVideo(Long id) {
-        return repository.findById(id).orElseThrow(IllegalStateException::new);
+    public VideoDto getVideo(Long id) {
+        Video video = repository.findById(id).orElseThrow(IllegalStateException::new);
+        return VideoDto.builder()
+                .id(video.getId())
+                .name(video.getName())
+                .description(video.getDescription())
+                .file(video.getFile())
+                .creator(video.getCreator())
+                .preview(video.getPreview())
+                .size(video.getSize())
+                .build();
     }
 
     @Override
-    public Video updateVideo(Long id, VideoForm form, Long userId, MultipartFile preview) {
+    public VideoDto updateVideo(Long id, VideoForm form, Long userId, MultipartFile preview) {
         Video videoForUpdate = repository.findById(id).orElseThrow(IllegalStateException::new);
         if (videoForUpdate.getCreator().getId().equals(userId)) {
             videoForUpdate.setDescription(form.getDescription());
@@ -101,8 +129,16 @@ public class VideoServiceImpl implements VideoService {
             String previewPath = uploadingImgService.upload(preview);
             videoForUpdate.setPreview(previewPath);
 
-            repository.save(videoForUpdate);
-            return repository.save(videoForUpdate);
+            Video video = repository.save(videoForUpdate);
+            return VideoDto.builder()
+                    .id(video.getId())
+                    .name(video.getName())
+                    .description(video.getDescription())
+                    .file(video.getFile())
+                    .creator(video.getCreator())
+                    .preview(video.getPreview())
+                    .size(video.getSize())
+                    .build();
         } else {
             throw new AccessDeniedException("you can not update this video");
         }

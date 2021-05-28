@@ -1,6 +1,7 @@
 package itis.semestrovka.controllers;
 
 import com.auth0.jwt.JWT;
+import itis.semestrovka.dto.PlaylistDto;
 import itis.semestrovka.dto.forms.PlaylistForm;
 import itis.semestrovka.models.Playlist;
 import itis.semestrovka.services.interfaces.PlaylistService;
@@ -31,7 +32,7 @@ public class PlaylistController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/playlists/{id}")
-    public Playlist getPlaylist(@PathVariable Long id) {
+    public PlaylistDto getPlaylist(@PathVariable Long id) {
         return service.getPlaylist(id);
     }
 
@@ -45,15 +46,15 @@ public class PlaylistController {
     @PostMapping("/playlists")
     public RedirectView addPlaylist(PlaylistForm form,
                                     @CookieValue Cookie token) {
-        if (service.addPlaylist(form, getIdFromCookie(token)) == null) throw new IllegalStateException();
-        return new RedirectView("/userPlaylists");
+        PlaylistDto playlist = service.addPlaylist(form, getIdFromCookie(token));
+        return new RedirectView("/playlists/"+playlist.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/playlists/{id}")
     public RedirectView updatePlaylist(@PathVariable Long id ,PlaylistForm form, @CookieValue Cookie token) {
-        if (service.updatePlaylist(id, form, getIdFromCookie(token)) == null) throw new IllegalStateException();
-        return new RedirectView("/userPlaylists");
+        service.updatePlaylist(id, form, getIdFromCookie(token));
+        return new RedirectView("playlists/"+id);
     }
 
     @PreAuthorize("isAuthenticated()")

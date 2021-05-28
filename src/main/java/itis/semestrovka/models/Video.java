@@ -29,6 +29,7 @@ public class Video {
 
     private Long size;
 
+    @Column(columnDefinition = "text")
     private String description;
 
     @JsonManagedReference

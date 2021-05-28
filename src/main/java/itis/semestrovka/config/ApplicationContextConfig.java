@@ -1,15 +1,21 @@
 package itis.semestrovka.config;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
+import org.springframework.web.client.RestTemplate;
+import sun.net.www.http.HttpClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,5 +75,14 @@ public class ApplicationContextConfig {
         return Executors.newFixedThreadPool(i);
     }
 
+    @Bean
+    public RestTemplate restTemplate() {
+        CloseableHttpClient client = HttpClients.custom()
+                .setSSLHostnameVerifier(new NoopHostnameVerifier())
+                .build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setHttpClient(client);
 
+        return new RestTemplate(requestFactory);
+    }
 }

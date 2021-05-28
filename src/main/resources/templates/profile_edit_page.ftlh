@@ -12,29 +12,15 @@
 <body>
 <#include "navbar.ftlh">
 <div id="wrapper">
-    <form method="post" v-bind:action="'/users/' + result.id">
+    <form method="post" action="/users/${user.id}">
         <label> <p>Name</p>
-            <input type="text" name="username" v-bind:value="result.username"></label>
+            <input type="text" name="username" value="${user.username}"></label>
         <label> <p>Email</p>
-            <input type="text" name="email" v-bind:value="result.email"></label>
+            <input type="text" name="email" value="${user.email}"></label>
         <label> <p>Birth</p>
-            <input type="date" name="birth" v-bind:value="result.birth"></label>
+            <input type="date" name="birth" value="${user.birth?iso_utc}"></label>
         <input type="submit">
     </form>
 </div>
-
-    <script>
-        let vm = new Vue({
-            el: "#wrapper",
-            data: {result:[]},
-            mounted() {
-                axios.get('/getProfile').then(
-                    res => {
-                        this.result = res.data;
-                    }
-                );
-            }
-        });
-    </script>
 </body>
 </html>

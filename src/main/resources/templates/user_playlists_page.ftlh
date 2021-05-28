@@ -16,7 +16,7 @@
     <div class="post" v-for="playlist in result.content" >
         <p>{{ playlist.name }}</p>
         <p>{{ playlist.user.username }}</p>
-        <a v-bind:href="'/playlist?id=' + playlist.id">more</a>
+        <a v-bind:href="'/playlist/' + playlist.id">more</a>
         <hr>
     </div>
     <button v-on:click="navigate" v-bind:name="result.number-1" v-bind:hidden="result.first" id="prev">prev</button>

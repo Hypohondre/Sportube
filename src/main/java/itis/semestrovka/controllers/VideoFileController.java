@@ -2,6 +2,7 @@ package itis.semestrovka.controllers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import itis.semestrovka.dto.VideoDto;
 import itis.semestrovka.dto.forms.VideoForm;
 import itis.semestrovka.models.Video;
 import itis.semestrovka.security.details.UserDetailsImpl;
@@ -49,11 +50,11 @@ public class VideoFileController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/videos/{id}")
-    public ResponseEntity<Video> getVideo(@PathVariable Optional<Long> id) {
-        return new ResponseEntity<>(service.getVideo(id
-                .orElseThrow(IllegalArgumentException::new)), HttpStatus.OK);
+    public VideoDto getVideo(@PathVariable Optional<Long> id) {
+        return service.getVideo(id.orElseThrow(IllegalArgumentException::new));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @SneakyThrows
     @GetMapping(path = "/getVideo/{videoPath}", produces = "video/mp4")
     public FileSystemResource getVideo(@PathVariable String videoPath) {
@@ -93,7 +94,7 @@ public class VideoFileController {
 
     @SneakyThrows
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/video/{id}")
+    @PatchMapping("/video/{id}")
     public RedirectView updateVideo(@PathVariable Long id,
                                     VideoForm form,
                                     @RequestParam("preview") MultipartFile preview,

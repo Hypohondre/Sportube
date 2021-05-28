@@ -2,10 +2,7 @@ package itis.semestrovka.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -35,5 +32,4 @@ public class PublicLoggingAspect {
     public void logReturningValue(JoinPoint joinPoint, Object returningValue) {
         logger.log(Level.INFO, "Returned value: " + returningValue);
     }
-
 }

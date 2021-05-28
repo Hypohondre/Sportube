@@ -1,5 +1,6 @@
 package itis.semestrovka.services.implementations;
 
+import itis.semestrovka.dto.PlaylistDto;
 import itis.semestrovka.dto.forms.PlaylistForm;
 import itis.semestrovka.dto.mappers.PlaylistFormMapper;
 import itis.semestrovka.models.Playlist;
@@ -32,9 +33,14 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 
     @Override
-    public Playlist getPlaylist(Long id) {
-        return repository.findById(id)
+    public PlaylistDto getPlaylist(Long id) {
+        Playlist playlist = repository.findById(id)
                 .orElseThrow(IllegalStateException::new);
+        return PlaylistDto.builder()
+                .id(playlist.getId())
+                .name(playlist.getName())
+                .user(playlist.getUser())
+                .build();
     }
 
     @SneakyThrows
@@ -47,24 +53,34 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @SneakyThrows
     @Override
-    public Playlist addPlaylist(PlaylistForm form, Long id) {
+    public PlaylistDto addPlaylist(PlaylistForm form, Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow((Supplier<Throwable>) () -> new UsernameNotFoundException("user not found"));
 
         Playlist playlist = mapper.formToPlaylist(form);
         playlist.setUser(user);
-        return repository.save(playlist);
+        Playlist newPlaylist = repository.save(playlist);
+        return PlaylistDto.builder()
+                .id(newPlaylist.getId())
+                .name(newPlaylist.getName())
+                .user(newPlaylist.getUser())
+                .build();
     }
 
     @SneakyThrows
     @Override
-    public Playlist updatePlaylist(Long id, PlaylistForm form, Long userId) {
+    public PlaylistDto updatePlaylist(Long id, PlaylistForm form, Long userId) {
         Playlist playlistForUpdate = repository.findById(id)
                 .orElseThrow(IllegalStateException::new);
 
         if (playlistForUpdate.getUser().getId().equals(userId)) {
             playlistForUpdate.setName(form.getName());
-            return repository.save(playlistForUpdate);
+            Playlist playlist = repository.save(playlistForUpdate);
+            return PlaylistDto.builder()
+                    .id(playlist.getId())
+                    .name(playlist.getName())
+                    .user(playlist.getUser())
+                    .build();
         } else throw new AccessDeniedException("you can not update this playlist");
     }
 

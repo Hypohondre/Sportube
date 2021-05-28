@@ -18,7 +18,7 @@ public class UserDto {
     private Long id;
     private String email;
     private String username;
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date birth;
     private String role;
