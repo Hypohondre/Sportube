@@ -2,7 +2,6 @@ package itis.semestrovka.security.details;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import itis.semestrovka.models.JwtToken;
 import itis.semestrovka.models.User;
 import itis.semestrovka.repositories.TokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 @Component("customUserDetailsService")

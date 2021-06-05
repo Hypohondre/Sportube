@@ -2,7 +2,6 @@ package itis.semestrovka.services.interfaces;
 
 import itis.semestrovka.dto.VideoDto;
 import itis.semestrovka.dto.forms.VideoForm;
-import itis.semestrovka.models.User;
 import itis.semestrovka.models.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

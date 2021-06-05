@@ -10,7 +10,6 @@ import itis.semestrovka.repositories.PlaylistRepository;
 import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.services.interfaces.SignUpService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

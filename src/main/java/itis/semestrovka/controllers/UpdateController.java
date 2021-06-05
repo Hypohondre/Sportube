@@ -1,21 +1,19 @@
 package itis.semestrovka.controllers;
 
 import itis.semestrovka.dto.PlaylistDto;
-import itis.semestrovka.dto.UserDto;
 import itis.semestrovka.dto.VideoDto;
 import itis.semestrovka.dto.forms.PlaylistForm;
 import itis.semestrovka.dto.forms.SignUpForm;
 import itis.semestrovka.dto.forms.VideoForm;
-import itis.semestrovka.security.details.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Controller
 @RequiredArgsConstructor

@@ -14,6 +14,7 @@
     <li><a href="/userPlaylists">Playlists</a></li>
     <li><a href="/createPlaylist">create playlist</a></li>
     <li><a href="/createVideo">create video</a></li>
+    <li><a href="/searchVideo">search</a></li>
     <li><a href="/logout">Logout</a></li>
 </ul>
 </body>

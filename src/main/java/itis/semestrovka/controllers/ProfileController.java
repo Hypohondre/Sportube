@@ -1,6 +1,7 @@
 package itis.semestrovka.controllers;
 
 import freemarker.template.TemplateException;
+import io.swagger.v3.oas.annotations.Hidden;
 import itis.semestrovka.dto.UserDto;
 import itis.semestrovka.security.details.UserDetailsImpl;
 import itis.semestrovka.security.token.TokenAuthentication;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.Cookie;
 import java.io.IOException;
 
+@Hidden
 @RestController
 @RequiredArgsConstructor
 public class ProfileController {

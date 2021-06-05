@@ -102,4 +102,10 @@ public class PageController {
         model.addAttribute("user", user.getBody());
         return "userProfilePage";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/searchVideo")
+    public String getSearchVideoPage() {
+        return "video_search_page";
+    }
 }

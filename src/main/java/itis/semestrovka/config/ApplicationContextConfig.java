@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.web.client.RestTemplate;
-import sun.net.www.http.HttpClient;
 
 import java.util.HashMap;
 import java.util.Map;

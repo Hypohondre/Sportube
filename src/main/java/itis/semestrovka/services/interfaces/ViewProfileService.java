@@ -3,7 +3,6 @@ package itis.semestrovka.services.interfaces;
 import itis.semestrovka.dto.UserDto;
 import itis.semestrovka.models.User;
 import itis.semestrovka.security.details.UserDetailsImpl;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 

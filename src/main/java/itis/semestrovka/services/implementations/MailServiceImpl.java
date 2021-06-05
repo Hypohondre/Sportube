@@ -4,11 +4,11 @@ import freemarker.template.TemplateException;
 import itis.semestrovka.dto.UserDto;
 import itis.semestrovka.models.User;
 import itis.semestrovka.services.interfaces.MailService;
+import itis.semestrovka.services.interfaces.SenderService;
 import itis.semestrovka.services.interfaces.TemplateResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import itis.semestrovka.services.interfaces.SenderService;
 
 import java.io.IOException;
 import java.util.HashMap;

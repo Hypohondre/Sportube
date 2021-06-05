@@ -18,7 +18,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         Cookie[] cookies = request.getCookies();
-        if (!(cookies == null)) {
+        if (cookies != null) {
             String token = null;
 
             for (Cookie cookie : cookies) {

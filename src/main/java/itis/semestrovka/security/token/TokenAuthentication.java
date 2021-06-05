@@ -19,7 +19,7 @@ public class TokenAuthentication implements Authentication {
     }
 
     public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = (UserDetailsImpl) userDetails;
+        this.userDetails = userDetails;
     }
 
     @Override

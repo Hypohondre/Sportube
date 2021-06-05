@@ -12,7 +12,6 @@ import itis.semestrovka.repositories.VideoRepository;
 import itis.semestrovka.services.interfaces.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -20,7 +19,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.util.function.Supplier;
 
 @Service

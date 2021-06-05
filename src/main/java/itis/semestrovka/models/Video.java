@@ -1,7 +1,5 @@
 package itis.semestrovka.models;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -29,7 +27,7 @@ public class Video {
 
     private Long size;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @JsonManagedReference

@@ -23,4 +23,6 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/logout
 ###
-DELETE http://localhost:8080/users/5
+GET http://localhost:8080/sendSms?phone=89178814575&text=Hello
+###
+DELETE http://localhost:8080/video/25

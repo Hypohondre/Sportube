@@ -21,6 +21,10 @@
             <input type="date" name="birth" value="${user.birth?iso_utc}"></label>
         <input type="submit">
     </form>
+
+    <a href="/changePassword">
+        <button>change password</button>
+    </a>
 </div>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Playlist</title>
+    <title>Search</title>
     <style>
         img {
             height: 100px;
@@ -22,17 +22,13 @@
 </head>
 <body>
 <#include "navbar.ftlh">
-    <div id="wrapper">
-        <h1>${playlist.name}</h1>
-        <p>Creator: ${playlist.user.username}</p>
-        <a href="/editPlaylist/${playlist.id}">edit</a>
-    </div>
-<hr>
-    <div id="videos">
+
+<div id="videos">
+        <input id="text" type="text" v-on:keydown="search">
         <div class="video" v-for="video in result.content" >
             <img v-bind:src="'/img/' + video.preview">
             <p>{{ video.name }}</p>
-            <span>{{ video.creator.username }}</span> <img v-bind:src="'/img/' + video.creator.photo" class="userImg">
+            <a v-bind:href="'/user/' + video.creator.id">{{ video.creator.username }}</a> <img v-bind:src="'/img/' + video.creator.photo" class="userImg">
             <a v-bind:href="'/video/' + video.id">more</a>
             <hr>
         </div>
@@ -46,7 +42,7 @@
             el: "#videos",
             data: {result: []},
             mounted() {
-                axios.get('/videosByPlaylist?id=' + '${playlist.id}').then(
+                axios.get('/search').then(
                     res => {
                         this.result = res.data;
                     }
@@ -57,7 +53,17 @@
                 navigate:
                     function(event) {
                         let number = event.target.name;
-                        axios.get('/videosByPlaylist?page=' + number + '&id=' + '${playlist.id}').then(
+                        let text = document.getElementById('text').value;
+                        axios.get('/search?page=' + number + '&name=' + text).then(
+                            res => {
+                                this.result = res.data;
+                            }
+                        );
+                    },
+                search:
+                    function (event) {
+                        let text = event.target.value;
+                        axios.get('/search?name=' + text).then(
                             res => {
                                 this.result = res.data;
                             }

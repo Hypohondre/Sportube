@@ -5,6 +5,7 @@ import itis.semestrovka.dto.forms.SignUpForm;
 import itis.semestrovka.services.implementations.SignUpServiceImpl;
 import itis.semestrovka.services.interfaces.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller

@@ -7,7 +7,6 @@ import itis.semestrovka.repositories.UserRepository;
 import itis.semestrovka.security.details.UserDetailsImpl;
 import itis.semestrovka.services.interfaces.ViewProfileService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

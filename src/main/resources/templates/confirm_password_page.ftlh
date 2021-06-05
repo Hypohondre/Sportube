@@ -5,15 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Confirm password change</title>
 </head>
 <body>
-    <form method="post" action="/login">
-        <label>Login</label>
-        <input type="text" name="login">
-        <label>Password</label>
-        <input type="password" name="password">
-        <input type="checkbox" name="rememberMe">
+    <form method="post" action="/confirm">
+        <input type="text" name="code">
         <input type="submit">
     </form>
 </body>

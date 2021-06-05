@@ -8,8 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -34,6 +32,8 @@ public class  User {
     @Column(name = "birth", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
+
+    private String phone;
 
     @Enumerated(value = EnumType.STRING)
     private State state;
