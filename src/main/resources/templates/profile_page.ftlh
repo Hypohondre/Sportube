@@ -29,6 +29,10 @@
     <p><div class="userInfo">Role : ${ user.role }</div></p>
     <p> <div class="userInfo">State : ${ user.state }</div></p>
     <img src="img/${user.photo}">
+    <form method="post" action="/changePhoto" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit">
+    </form>
     <a href="/editProfile">edit</a>
 </div>
 

@@ -12,9 +12,10 @@
 <ul>
     <li><a class="active" href="/profile">Profile</a></li>
     <li><a href="/userPlaylists">Playlists</a></li>
-    <li><a href="/createPlaylist">create playlist</a></li>
-    <li><a href="/createVideo">create video</a></li>
-    <li><a href="/searchVideo">search</a></li>
+    <li><a href="/createPlaylist">Create playlist</a></li>
+    <li><a href="/createVideo">Create video</a></li>
+    <li><a href="/searchVideo">Search videos</a></li>
+    <li><a href="/chatM">Chat</a></li>
     <li><a href="/logout">Logout</a></li>
 </ul>
 </body>

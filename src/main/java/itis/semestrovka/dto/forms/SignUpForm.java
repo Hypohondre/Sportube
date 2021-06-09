@@ -31,4 +31,6 @@ public class SignUpForm {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birth;
+    @Size(min = 11, message = "Incorrect phone number")
+    private String phone;
 }

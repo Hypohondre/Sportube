@@ -1,5 +1,6 @@
 package itis.semestrovka.controllers;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import itis.semestrovka.models.Video;
 import itis.semestrovka.services.interfaces.SearchVideoService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+@Hidden
 @RestController
 @RequiredArgsConstructor
 public class VideoSearchController {

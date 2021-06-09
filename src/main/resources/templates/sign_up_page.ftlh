@@ -26,6 +26,7 @@
         <input type="text" name="username">
         <label><@spring.message 'sign_up_page.birth'/></label>
         <input type="date" name="birth">
+        <input type="tel" name="phone">
         <input type="submit">
     </form>
 </body>

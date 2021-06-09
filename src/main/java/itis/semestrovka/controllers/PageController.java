@@ -108,4 +108,10 @@ public class PageController {
     public String getSearchVideoPage() {
         return "video_search_page";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/chatM")
+    public String getMessage() {
+        return "chat";
+    }
 }

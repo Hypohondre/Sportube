@@ -1,6 +1,7 @@
 package itis.semestrovka.controllers.rest;
 
 import com.auth0.jwt.JWT;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import itis.semestrovka.dto.PlaylistDto;
 import itis.semestrovka.dto.forms.PlaylistForm;
@@ -25,24 +26,40 @@ import javax.servlet.http.Cookie;
 public class PlaylistController {
     private final PlaylistService service;
 
+    @Operation(
+            summary = "получение всех плейлистов",
+            description = "получение страницы плейлистов"
+    )
     @PreAuthorize("permitAll()")
     @GetMapping("/playlists")
     public Page<Playlist> getAll(@PageableDefault(size = 1, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return service.getAll(pageable);
     }
 
+    @Operation(
+            summary = "получение плейлиста",
+            description = "получение объекта плейлиста"
+    )
     @PreAuthorize("permitAll()")
     @GetMapping("/playlists/{id}")
     public PlaylistDto getPlaylist(@PathVariable Long id) {
         return service.getPlaylist(id);
     }
 
+    @Operation(
+            summary = "получение всех плейлистов пользователя",
+            description = "получение страницы плейлистов пользователя"
+    )
     @PreAuthorize("permitAll()")
     @GetMapping("/getAllPlaylistsByUser")
     public Page<Playlist> getAllByUser(@CookieValue Cookie token, @PageableDefault(size = 1, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return service.getAllByUser(getIdFromCookie(token), pageable);
     }
 
+    @Operation(
+            summary = "добавление плейлиста",
+            description = "добавление плейлиста"
+    )
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/playlists")
     public RedirectView addPlaylist(PlaylistForm form,
@@ -51,6 +68,10 @@ public class PlaylistController {
         return new RedirectView("/playlists/"+playlist.getId());
     }
 
+    @Operation(
+            summary = "редактирование плейлиста",
+            description = "редактирование плейлиста"
+    )
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/playlists/{id}")
     public RedirectView updatePlaylist(@PathVariable Long id ,PlaylistForm form, @CookieValue Cookie token) {
@@ -58,6 +79,10 @@ public class PlaylistController {
         return new RedirectView("playlists/"+id);
     }
 
+    @Operation(
+            summary = "удаление плейлиста",
+            description = "удаление плейлиста"
+    )
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/playlists/{id}")
     public ResponseEntity<Void> deletePlaylist(@PathVariable Long id,

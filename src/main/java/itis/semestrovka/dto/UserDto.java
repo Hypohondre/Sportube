@@ -25,4 +25,5 @@ public class UserDto {
     private String state;
     private String photo;
     private String code;
+    private String phone;
 }
